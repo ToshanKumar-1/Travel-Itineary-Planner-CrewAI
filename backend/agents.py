@@ -85,7 +85,7 @@ def create_logistics_manager() -> Agent:
             "You MUST provide the actual names of the airlines/trains and hotels with specific prices. Do not use generic averages. "
             "Present all options in comparison tables so the traveler can choose. "
             "Calculate the total estimated cost for 3 packages (Budget, Mid-Range, Premium) for ALL {num_persons} person(s) using the CalculatorTool. "
-            "The flight cost in each package MUST include BOTH outbound AND return tickets. "
+            "The transport cost in each package should cover the ONE-WAY trip. "
             "Verify which packages stay within the total budget of {currency_symbol}{total_budget}. "
             "All prices must be shown in BOTH the user's currency {currency} ({currency_symbol}) AND the destination country's local currency. "
             "If the user's currency and the destination's local currency are the same, show only one. "
@@ -93,8 +93,8 @@ def create_logistics_manager() -> Agent:
         backstory=(
             "You are a meticulous financial planner and travel deal expert. "
             "You have spent years helping travelers get the best bang for their buck. "
-            "You excel at finding budget-friendly flights, comparing hotel prices, "
-            "and creating realistic cost breakdowns. You never let a trip go over budget."
+            "You excel at finding budget-friendly transport, comparing hotel prices, "
+            "and creating realistic cost breakdowns. You never let a trip go over budget, and you always explore alternative transport (trains, buses) if flights are too expensive or the distance is short."
         ),
         tools=[search_flights, search_hotels, search_tool, calculate],
         llm=gemini_llm,

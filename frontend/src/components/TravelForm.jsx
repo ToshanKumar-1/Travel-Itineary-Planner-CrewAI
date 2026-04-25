@@ -21,6 +21,9 @@ const INTERESTS = [
 export default function TravelForm({ onSubmit, disabled }) {
   const [currency, setCurrency] = useState('INR|Rs.')
   const [selectedInterests, setSelectedInterests] = useState(['History & Culture', 'Food & Drink'])
+  
+  // Get today's date in YYYY-MM-DD format for the date picker minimum
+  const today = new Date().toISOString().split('T')[0]
 
   const currencySymbol = currency.split('|')[1]
 
@@ -35,17 +38,39 @@ export default function TravelForm({ onSubmit, disabled }) {
   const handleSubmit = (e) => {
     e.preventDefault()
     const fd = new FormData(e.target)
+    
+    const origin = fd.get('origin').trim()
+    const destination = fd.get('destination').trim()
+    const budget = parseInt(fd.get('budget'))
+    const num_days = parseInt(fd.get('num_days'))
+    const num_persons = parseInt(fd.get('num_persons'))
     const [currencyCode, currSymbol] = currency.split('|')
 
+    // Basic Validation
+    if (origin.toLowerCase() === destination.toLowerCase()) {
+      alert("Origin and destination cannot be the same city.")
+      return
+    }
+    
+    if (budget < 500) {
+      alert("Please enter a realistic budget per person (minimum 500).")
+      return
+    }
+    
+    if (num_days > 30) {
+      alert("Trips are limited to a maximum of 30 days.")
+      return
+    }
+
     onSubmit({
-      origin: fd.get('origin'),
-      destination: fd.get('destination'),
-      budget: parseInt(fd.get('budget')),
-      num_persons: parseInt(fd.get('num_persons')),
+      origin,
+      destination,
+      budget,
+      num_persons,
       currency: currencyCode,
       currency_symbol: currSymbol,
       start_date: fd.get('start_date'),
-      num_days: parseInt(fd.get('num_days')),
+      num_days,
       interests: selectedInterests.join(', ') || 'General sightseeing',
     })
   }
@@ -103,7 +128,7 @@ export default function TravelForm({ onSubmit, disabled }) {
               </span>
               Budget / Person ({currencySymbol})
             </label>
-            <input type="number" name="budget" id="input-budget" min="0" defaultValue="50000" step="100" required />
+            <input type="number" name="budget" id="input-budget" min="500" defaultValue="50000" step="100" required />
           </div>
           <div className="form-group">
             <label>
@@ -121,7 +146,7 @@ export default function TravelForm({ onSubmit, disabled }) {
               </span>
               Start Date
             </label>
-            <input type="date" name="start_date" id="input-date" required />
+            <input type="date" name="start_date" id="input-date" min={today} required />
           </div>
           <div className="form-group">
             <label>
