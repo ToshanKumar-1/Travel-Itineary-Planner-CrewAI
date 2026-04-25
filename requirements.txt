@@ -2,6 +2,7 @@ crewai[tools]
 langchain-google-genai
 python-dotenv
 fastapi
-uvicorn
+uvicorn[standard]
 pydantic
 google-search-results
+sse-starlette

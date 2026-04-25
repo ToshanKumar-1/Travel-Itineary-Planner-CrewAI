@@ -4,8 +4,7 @@ import json
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from fastapi import FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -44,15 +43,6 @@ class TripRequest(BaseModel):
     interests: str
 
 
-# Serve the static files directory
-os.makedirs("static", exist_ok=True)
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
-@app.get("/")
-def serve_frontend():
-    """Serves the main HTML file on the root route."""
-    return FileResponse("static/index.html")
 
 
 @app.post("/api/generate")
