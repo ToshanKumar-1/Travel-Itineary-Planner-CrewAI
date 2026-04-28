@@ -30,6 +30,7 @@ def calculate(expression: str) -> str:
 # ── LLM Setup ────────────────────────────────────────────────────────────────
 # Using Gemini 2.5 Flash
 # Requires GEMINI_API_KEY to be set in the environment / .env file.
+# gemini-3.1-pro-preview
 gemini_llm = LLM(
     model="gemini/gemini-3.1-flash-lite-preview",
     temperature=0.7,

@@ -43,7 +43,7 @@ def create_research_task(researcher) -> Task:
             "- **Budget-Friendly Activities**"
         ),
         agent=researcher,
-        async_execution=True,  # Run in parallel with logistics task
+        async_execution=False,  # Run in parallel with logistics task
     )
 
 
@@ -72,7 +72,7 @@ def create_logistics_task(logistics_manager) -> Task:
             "You MUST determine the correct IATA codes for {origin} and {destination} and pass them as origin and destination.\n"
             "   For EACH option, provide:\n"
             "   - **Route:** {origin} to {destination} -- Transport provider name (Airline/Train/Bus), price PER PERSON, duration, and number of stops/transfers.\n"
-            "   Include a mix of budget-friendly ground transport and flights (if applicable).\n\n"
+            "   Include a mix of budget-friendly ground transport (give only up to 3 options) and flights (if applicable).\n\n"
             "2. **Accommodation:** You MUST use the `HotelSearchTool` to fetch real hotel prices in {destination}. "
             "For each hotel provide: Hotel name, star rating, location/area, nightly rate PER ROOM, "
             "and total cost for {num_days} nights. "
@@ -107,7 +107,7 @@ def create_logistics_task(logistics_manager) -> Task:
             "| [PREMIUM] | ... | ... | ... | {currency_symbol}XXX | Within/Over |\n"
         ),
         agent=logistics_manager,
-        async_execution=True,  # Run in parallel with research task
+        async_execution=False,  # Run in parallel with research task
     )
 
 

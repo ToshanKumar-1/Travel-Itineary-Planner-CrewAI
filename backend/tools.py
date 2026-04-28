@@ -79,8 +79,8 @@ def search_hotels(destination: str, check_in_date: str, check_out_date: str) -> 
             "check_in_date": check_in_date,
             "check_out_date": check_out_date,
             "api_key": api_key,
-            "currency": "USD",
-            "gl": "us",
+            "currency": "INR",
+            "gl": "in",
             "hl": "en"
         }
         
